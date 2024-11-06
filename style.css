@@ -18,6 +18,24 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 30px;
+}
+
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+
+
+.navigation{
+    background-color: #72BF78;
+    font-size: 40px;
+    color: #FEFF9F;
+    border: none;
+    cursor: pointer;
 }
 
 #calendar{
@@ -43,5 +61,4 @@ body{
 .day-number{
     font-size: 35px;
     font-weight: bold;
-    text-align: center;
 }
