@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Calendar in JavaScript </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,9 +16,22 @@
             <button class="navigation" id="nextMonth">&gt;</button>
 
         </div>
-        <div id="calendar"></div>
+        <div id="calendar">
+        </div>
     </div>
 
-    <script src="app (3).js"></script>
+    <!-- <button id="myBtn">OPEN MODAL</button> -->
+
+
+    <div id="myModal" class="modal">
+        <form class="modal-content">
+            <input id="input-title" class="input input-title" type="text" placeholder="Title">
+            <input id="input-description" class="input input-description" type="text" placeholder="Description">
+            <button type="submit" class="submit">ADD<i class="fa-sharp fa-thin fa-plus"></i></button>
+            <button class="close-modal"><i class="fa-solid fa-xmark" style="color: #72BF78;"></i></button>
+        </form>
+    </div>
+
+    <script src="app (3) (1).js"></script>
 </body>
 </html>
