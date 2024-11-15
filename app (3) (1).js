@@ -54,8 +54,16 @@ nextMonth.addEventListener("click", ()=> {
     updateCalendar(++currentMonth, currentYear);
 });
 
+document.addEventListener("DOMContentLoaded", getTasks);
 calendar.addEventListener('click', addTask);
 btnModal.addEventListener('click',submitModal);
+
+closeModal.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.style.display = "none";
+
+
+})
 
 const today = new Date();
 let currentMonth = today.getMonth();
@@ -141,8 +149,7 @@ function submitModal(e) {
     taskDescription.innerHTML = description.value;
 
     dayTask.appendChild(taskDescription);
-    saveLocalTask(taskDescription.value);
-
+    saveLocalTask( taskDescription.innerHTML);
 
     document.querySelector('#input-description').value = "";
 
@@ -172,7 +179,33 @@ function removeLocalTask(){
 
 function getTasks() {
 
+    console.log("it works ")
 
+    let tasks;
+
+    if(localStorage.getItem('tasks') === null ){
+        tasks = [];
+    }
+    else{
+        tasks = JSON.parse(localStorage.getItem('tasks')) ;
+    }
+
+    tasks.forEach(function (task) {
+
+    const dayTask = document.createElement('div');        
+    dayTask.classList.add("day-task-box");
+
+    const taskDescription = document.createElement('p');        
+    taskDescription.classList.add('description-par');
+    taskDescription.innerHTML = task;
+
+    dayTask.appendChild(taskDescription);
+
+    const selectedDay = calendar.querySelector('.day.selected');
+    selectedDay.appendChild(dayTask);
+
+
+})
 }
 
 
@@ -184,6 +217,4 @@ function getTasks() {
 // Function calls 
 createCalendarElements();
 updateCalendar(currentMonth, currentYear);
-
-localStorage.clear();
 
