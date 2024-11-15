@@ -44,8 +44,6 @@ previousMonth.addEventListener("click", ()=> {
 
     }
     updateCalendar(--currentMonth, currentYear);
-   
-
 });
 
 nextMonth.addEventListener("click", ()=> {
@@ -53,23 +51,16 @@ nextMonth.addEventListener("click", ()=> {
         currentMonth = -1;
         currentYear++;
     }
-
     updateCalendar(++currentMonth, currentYear);
-   
 });
 
 calendar.addEventListener('click', addTask);
 btnModal.addEventListener('click',submitModal);
-// closeModal.addEventListener('click',closeModalWindow);
-
-
 
 const today = new Date();
-// let currentDay = today.getDate()
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
 
-console.log(today);
 
 // Functions 
 
@@ -85,19 +76,23 @@ function createCalendarElements() {
         const dayNumber = document.createElement('p');
         dayNumber.classList.add('day-number');
 
-        const eventName = document.createElement('p');
+        const eventName = document.createElement('div');
         eventName.classList.add('small');
 
         day.appendChild(dayText);
         day.appendChild(dayNumber);
         day.appendChild(eventName);
 
+        day.addEventListener("click", () => {
+            document.querySelectorAll(".day").forEach(d => d.classList.remove('selected'));
+            day.classList.add('selected');
+        })
+
         calendar.appendChild(day);
     }
 
     eventSaver = document.querySelectorAll(".small");
     arrEventSaver = [...eventSaver];
-    console.log(arrEventSaver);
 }
 
 function updateCalendar(month, year) {
@@ -129,78 +124,59 @@ function updateCalendar(month, year) {
 }
 
 function addTask(e) {
-    console.log("added");
     modal.style.display = "block";
 
 }
 
-    function submitModal(e) {
-        e.preventDefault();
+function submitModal(e) {
+    e.preventDefault();
 
-        const title = document.querySelector('#input-title').value;
-        console.log(title);
-        const description = document.querySelector('#input-description').value;
-        console.log(description);
+    const description = document.querySelector('#input-description');
 
-        // створюю куди мають зберегтись дані 
+    const dayTask = document.createElement('div');        
+    dayTask.classList.add("day-task-box");
 
-        const dayTask = document.createElement('div');
-        dayTask.classList.add("day-task-box");
+    const taskDescription = document.createElement('p');        
+    taskDescription.classList.add('description-par');
+    taskDescription.innerHTML = description.value;
 
-        const taskTitle = document.createElement('p');
-        taskTitle.classList.add('title-par');
-        taskTitle.innerHTML = title.value;
+    dayTask.appendChild(taskDescription);
+    saveLocalTask(taskDescription.value);
 
 
-        const taskDescription = document.createElement('p');
-        taskDescription.classList.add('description-par');
-        taskDescription.innerHTML = description.value;
+    document.querySelector('#input-description').value = "";
 
+    const selectedDay = calendar.querySelector('.day.selected');
+        if (selectedDay) {
+            selectedDay.appendChild(dayTask);
+        }
 
-        dayTask.appendChild(taskTitle);
-        dayTask.appendChild(taskDescription);
-
-        title.value = "";
-        description.value = "";
-
-        calendar.appendChild(dayTask);
-        modal.style.display = "none";
-
-
-
-
-
-
-
-
-
-
-
-
-
+    modal.style.display = "none";
     }
 
+function saveLocalTask(task) {
+    let tasks;
+    if(localStorage.getItem('tasks') === null ){
+        tasks = [];
+    }
+    else{
+        tasks = JSON.parse(localStorage.getItem('tasks')) ;
+    }
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
-// function closeModalWindow(e){
+function removeLocalTask(){
 
-//     const item = e.target;
+}
 
-//     if(item.classList[0] === 'close-modal') {
-//         modal.style.display = "none";
-//     }
-//     //  // When the user clicks on (x), close the modal
+function getTasks() {
 
-//  if (e.target === closeModal ){
-//     modal.style.display = "none";
-// }
 
-// // When the user clicks anywhere outside of the modal, close it
+}
 
-// else if (e.target === modal) {
-//     modal.style.display = "none";
-// }
 
-// }
+
 
 
 
@@ -208,4 +184,6 @@ function addTask(e) {
 // Function calls 
 createCalendarElements();
 updateCalendar(currentMonth, currentYear);
+
+localStorage.clear();
 
